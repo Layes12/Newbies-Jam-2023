@@ -239,7 +239,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
+<<<<<<< Updated upstream
   moveSmoothness: 0.05
+=======
+  moveSmoothness: 0.02
+>>>>>>> Stashed changes
   tiltAngle: 25
   stopThreshold: 5
   screenLeftBoundary: -7.7
