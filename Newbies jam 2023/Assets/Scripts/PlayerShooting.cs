@@ -17,23 +17,23 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && canShootTop)
+        if (Input.GetKeyDown(KeyCode.I) && canShootTop)
         {
             shooting = true;
             canShootBottom = false;
         }
-        else if (Input.GetKeyDown(KeyCode.S) && canShootBottom)
+        else if (Input.GetKeyDown(KeyCode.K) && canShootBottom)
         {
             shooting = true;
             canShootTop = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.I))
         {
             shooting = false;
             canShootBottom = true;
         }
-        else if (Input.GetKeyUp(KeyCode.S))
+        else if (Input.GetKeyUp(KeyCode.K))
         {
             shooting = false;
             canShootTop = true;

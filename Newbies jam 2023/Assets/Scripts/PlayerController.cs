@@ -2,52 +2,68 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float moveSmoothness = 0.1f;
-    public float tiltAngle = 10f;
-    public float stopThreshold = 0.1f;
-    public float screenLeftBoundary = -5f;
-    public float screenRightBoundary = 5f;
+    public float moveSpeed;
+    public Rigidbody2D rb;
+    public Transform playerSprite;
 
-    private Rigidbody2D rb;
-
-    private float moveInput;
-    private bool isMoving;
-
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    private Vector2 moveDirection;
 
     private void Update()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-        isMoving = Mathf.Abs(rb.velocity.x) > stopThreshold;
+        ProcessInputs();
+        RotatePlayer();
     }
 
     private void FixedUpdate()
     {
-        float xVelocity = rb.velocity.x;
-        float targetVelocity = moveInput * moveSpeed;
+        Move();
+    }
 
-        rb.velocity = new Vector2(Mathf.SmoothDamp(xVelocity, targetVelocity, ref xVelocity, moveSmoothness), rb.velocity.y);
+    private void ProcessInputs()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        moveDirection = new Vector2(moveX, moveY).normalized;
+    }
 
-        if (isMoving)
+    private void Move()
+    {
+        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+    }
+
+    private void RotatePlayer()
+    {
+        if (moveDirection.x > 0 && moveDirection.y == 0)
         {
-            float tiltAmount = rb.velocity.x > 0 ? -tiltAngle : tiltAngle;
-            Quaternion targetRotation = Quaternion.Euler(0f, 0f, tiltAmount);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
+            playerSprite.rotation = Quaternion.Euler(0, 0, 270);
         }
-        else
+        else if (moveDirection.x < 0 && moveDirection.y == 0)
         {
-            // Reset tilt when not moving
-            Quaternion targetRotation = Quaternion.Euler(0f, 0f, 0f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
+            playerSprite.rotation = Quaternion.Euler(0, 0, 90);
         }
-
-        // Clamp player position to screen boundaries
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(transform.position.x, screenLeftBoundary, screenRightBoundary);
-        transform.position = clampedPosition;
+        else if (moveDirection.x == 0 && moveDirection.y > 0)
+        {
+            playerSprite.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (moveDirection.x == 0 && moveDirection.y < 0)
+        {
+            playerSprite.rotation = Quaternion.Euler(0, 0, 180);
+        }
+        else if (moveDirection.x > 0 && moveDirection.y > 0)
+        {
+            playerSprite.rotation = Quaternion.Euler(0, 0, 315);
+        }
+        else if (moveDirection.x < 0 && moveDirection.y > 0)
+        {
+            playerSprite.rotation = Quaternion.Euler(0, 0, 45);
+        }
+        else if (moveDirection.x < 0 && moveDirection.y < 0)
+        {
+            playerSprite.rotation = Quaternion.Euler(0, 0, 135);
+        }
+        else if (moveDirection.x > 0 && moveDirection.y < 0)
+        {
+            playerSprite.rotation = Quaternion.Euler(0, 0, 225);
+        }
     }
 }

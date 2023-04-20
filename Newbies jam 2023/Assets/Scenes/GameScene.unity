@@ -240,7 +240,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -365,12 +365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 650a29e39cb05be45ae5d523a4b30ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 17.5
-  moveSmoothness: 0.04
-  tiltAngle: 25
-  stopThreshold: 10
-  screenLeftBoundary: -7.9
-  screenRightBoundary: 7.9
+  moveSpeed: 10
+  rb: {fileID: 1663302153}
+  playerSprite: {fileID: 1663302155}
 --- !u!61 &1663302152
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -417,7 +414,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &1663302154
 SpriteRenderer:
   m_ObjectHideFlags: 0
