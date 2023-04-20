@@ -238,14 +238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 650a29e39cb05be45ae5d523a4b30ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
-<<<<<<< Updated upstream
-  moveSmoothness: 0.05
-=======
+  moveSpeed: 25
   moveSmoothness: 0.02
->>>>>>> Stashed changes
   tiltAngle: 25
-  stopThreshold: 5
+  stopThreshold: 1
   screenLeftBoundary: -7.7
   screenRightBoundary: 7.7
 --- !u!61 &1663302152
