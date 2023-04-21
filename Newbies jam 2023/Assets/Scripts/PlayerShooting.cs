@@ -8,7 +8,7 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bottomBulletPrefab;
     public Transform[] topShootingPoints;
     public Transform[] bottomShootingPoints;
-    public float fireRate = 0.2f;
+    public float fireRate = 0.2f, bulletSpeed;
 
     private bool shooting = false;
     private float nextFire = 0f;
@@ -17,23 +17,23 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I) && canShootTop)
+        if (Input.GetKeyDown(KeyCode.Q) && canShootTop)
         {
             shooting = true;
             canShootBottom = false;
         }
-        else if (Input.GetKeyDown(KeyCode.K) && canShootBottom)
+        else if (Input.GetKeyDown(KeyCode.E) && canShootBottom)
         {
             shooting = true;
             canShootTop = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.I))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
             shooting = false;
             canShootBottom = true;
         }
-        else if (Input.GetKeyUp(KeyCode.K))
+        else if (Input.GetKeyUp(KeyCode.E))
         {
             shooting = false;
             canShootTop = true;
@@ -47,16 +47,18 @@ public class PlayerShooting : MonoBehaviour
             {
                 for (int i = 0; i < topShootingPoints.Length; i++)
                 {
-                    GameObject bullet = Instantiate(topBulletPrefab, topShootingPoints[i].position, Quaternion.identity);
-                    
+                    GameObject bullet = Instantiate(topBulletPrefab, topShootingPoints[i].position, transform.rotation);
+                    bullet.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bulletSpeed);
+                    i++;
                 }
             }
             else if (canShootBottom)
             {
                 for (int i = 0; i < bottomShootingPoints.Length; i++)
                 {
-                    GameObject bullet = Instantiate(bottomBulletPrefab, bottomShootingPoints[i].position, Quaternion.identity);
-                    
+                    GameObject bullet = Instantiate(bottomBulletPrefab, bottomShootingPoints[i].position, transform.rotation);
+                    bullet.GetComponent<Rigidbody2D>().AddForce(Vector2.down * bulletSpeed, ForceMode2D.Impulse);
+                    i++;
                 }
             }
         }
